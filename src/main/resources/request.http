@@ -3,8 +3,8 @@ POST http://localhost:8080/
 Content-Type: application/json
 
 {
-  "title": "Tutorial Makan Jasa Marga",
-  "description": "Wakwaw"
+  "title": "The Return of the King",
+  "description": "The forces of good and evil converge in a final battle for the fate of Middle-earth, as Frodo and Sam draw closer to their goal of destroying the One Ring."
 }
 
 ### Post "Bonjour!"
@@ -13,7 +13,8 @@ POST http://localhost:8080/
 Content-Type: application/json
 
 {
-  "text": "Bonjour!"
+  "title": "Bonjour!",
+  "description": "Fuck Off"
 }
 
 ### Post "Privet!"
