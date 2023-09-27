@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Table
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -34,7 +34,7 @@ class MessageController(val service: MessageService) {
     fun index(): List<NewMessage> = service.findMessages()
 
     @GetMapping("/{id}")
-    fun index(@PathVariable id: String): List<NewMessage> =
+    fun index(@PathVariable id: String): NewMessage? =
         service.findMessageById(id)
 
     @PostMapping("/")
@@ -45,10 +45,9 @@ class MessageController(val service: MessageService) {
 
 @Service
 class MessageService(val db: MessageRepository) {
-    fun findMessages(): List<NewMessage> = db.findAll().toList()
+    fun findMessages(): List<NewMessage> = db.findAll()
 
-    fun findMessageById(id: String): List<NewMessage> =
-        db.findById(id).toList()
+    fun findMessageById(id: String): NewMessage? = db.findById(id).orElse(null)
 
     fun save(newMessage: NewMessage) {
         db.save(newMessage)
@@ -58,10 +57,15 @@ class MessageService(val db: MessageRepository) {
         if (isPresent) listOf(get()) else emptyList()
 }
 
-@Table("NEWMESSAGES")
+//@Table("NEWMESSAGES")
+//data class NewMessage(@Id val id: String?, val title: String, val description: String)
+
+@Document(collection = "message")
 data class NewMessage(@Id val id: String?, val title: String, val description: String)
 
-interface MessageRepository : CrudRepository<NewMessage, String>
+interface MessageRepository : MongoRepository<NewMessage, String>
+
+//interface MessageRepository : CrudRepository<NewMessage, String>
 
 @Configuration
 @EnableWebMvc
