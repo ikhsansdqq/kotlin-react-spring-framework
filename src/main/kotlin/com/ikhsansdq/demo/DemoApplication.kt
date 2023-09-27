@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
 @RequestMapping("/")
 class MessageController(val service: MessageService) {
     @GetMapping("/")
-    @CrossOrigin(origins = ["http://localhost:5173/"])
+    @CrossOrigin(origins = ["http://localhost:3000/"])
     fun index(): List<NewMessage> = service.findMessages()
 
     @GetMapping("/{id}")
@@ -68,7 +68,7 @@ interface MessageRepository : CrudRepository<NewMessage, String>
 class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/api/**")
-            .allowedOrigins("http://localhost:5173/")
+            .allowedOrigins("http://localhost:3000/")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("*")
             .allowCredentials(true)
