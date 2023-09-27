@@ -7,17 +7,10 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import java.util.Optional
 
 @SpringBootApplication
 class DemoApplication
@@ -52,20 +45,12 @@ class MessageService(val db: MessageRepository) {
     fun save(newMessage: NewMessage) {
         db.save(newMessage)
     }
-
-    fun <T : Any> Optional<out T>.toList(): List<T> =
-        if (isPresent) listOf(get()) else emptyList()
 }
 
-//@Table("NEWMESSAGES")
-//data class NewMessage(@Id val id: String?, val title: String, val description: String)
-
-@Document(collection = "message")
-data class NewMessage(@Id val id: String?, val title: String, val description: String)
+@Document("message")
+data class NewMessage(@Id val id: String, val title: String, val description: String)
 
 interface MessageRepository : MongoRepository<NewMessage, String>
-
-//interface MessageRepository : CrudRepository<NewMessage, String>
 
 @Configuration
 @EnableWebMvc
