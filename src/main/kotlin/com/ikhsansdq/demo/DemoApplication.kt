@@ -27,17 +27,17 @@ fun main(args: Array<String>) {
 }
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/messages/api/")
 class MessageController(val service: MessageService) {
     @GetMapping("/")
     @CrossOrigin(origins = ["http://localhost:3000/"])
     fun index(): List<NewMessage> = service.findMessages()
 
-    @GetMapping("/{id}")
+    @GetMapping("/messages/api/{id}")
     fun index(@PathVariable id: String): NewMessage? =
         service.findMessageById(id)
 
-    @PostMapping("/")
+    @PostMapping("/messages/api/")
     fun post(@RequestBody newMessage: NewMessage) {
         service.save(newMessage)
     }
