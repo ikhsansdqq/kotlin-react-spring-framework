@@ -8,13 +8,13 @@ export default function Home() {
     useEffect(() => {
         fetch('http://localhost:8080/messages/api/')
             .then((response) => response.json())
-            .then((data) => setMessages(data))
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-                if (error.response) {
-                    console.error('Response data:', error.response.data)
-                }
-            });
+            .then((data) => setMessages(data)
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                    if (error.response) {
+                        console.error('Response data:', error.response.data)
+                    }
+                }));
     }, []);
 
     return (
