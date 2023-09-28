@@ -1,5 +1,6 @@
 package com.ikhsansdq.demo
 
+import org.bson.types.ObjectId
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Configuration
@@ -20,17 +21,19 @@ fun main(args: Array<String>) {
 }
 
 @RestController
-@RequestMapping("/messages/api/")
+@RequestMapping("/messages/api")
 class MessageController(val service: MessageService) {
     @GetMapping("/")
     @CrossOrigin(origins = ["http://localhost:3000/"])
     fun index(): List<NewMessage> = service.findMessages()
 
-    @GetMapping("/messages/api/{id}")
-    fun index(@PathVariable id: String): NewMessage? =
-        service.findMessageById(id)
+    @GetMapping("/{id}")
+    fun index(@PathVariable id: String): NewMessage? {
+        val objectId = ObjectId(id)
+            return service.findMessageById(objectId)
+    }
 
-    @PostMapping("/messages/api/")
+    @PostMapping("/")
     fun post(@RequestBody newMessage: NewMessage) {
         service.save(newMessage)
     }
@@ -40,7 +43,7 @@ class MessageController(val service: MessageService) {
 class MessageService(val db: MessageRepository) {
     fun findMessages(): List<NewMessage> = db.findAll()
 
-    fun findMessageById(id: String): NewMessage? = db.findById(id).orElse(null)
+    fun findMessageById(id: ObjectId): NewMessage? = db.findById(id.toString()).orElse(null)
 
     fun save(newMessage: NewMessage) {
         db.save(newMessage)
