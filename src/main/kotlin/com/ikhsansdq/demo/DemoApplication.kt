@@ -24,10 +24,11 @@ fun main(args: Array<String>) {
 @RequestMapping("/messages/api")
 class MessageController(val service: MessageService) {
     @GetMapping("/")
-    @CrossOrigin(origins = ["http://localhost:3000/"])
+    @CrossOrigin(origins = ["http://localhost:3000"])
     fun index(): List<NewMessage> = service.findMessages()
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = ["http://localhost:3000/messages/{id}"])
     fun index(@PathVariable id: String): NewMessage? {
         val objectId = ObjectId(id)
             return service.findMessageById(objectId)
@@ -59,8 +60,8 @@ interface MessageRepository : MongoRepository<NewMessage, String>
 @EnableWebMvc
 class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/api/**")
-            .allowedOrigins("http://localhost:3000/")
+        registry.addMapping("/messages/**")
+            .allowedOrigins("http://localhost:3000") // Allow any subpath of http://localhost:3000
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("*")
             .allowCredentials(true)
