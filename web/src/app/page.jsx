@@ -18,14 +18,14 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="container mx-auto py-8 lg:container">
+        <div className="container mx-auto py-5 lg:container">
             <h1 className="text-5xl font-bold dark:text-white">Testing Messages</h1>
             <p className="mt-4 text-gray-500 dark:text-gray-400">
                 Below will be shown a list of API calls made by Spring Framework
             </p>
 
             <button type="button"
-                    className="py-2.5 px-5 mt-6 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    className="py-2.5 px-5 mt-4 mb-2 font-medium text-lg text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <a href="./post/">Create Post</a>
             </button>
 
@@ -33,7 +33,7 @@ export default function Home() {
                 {messages.map((message) => (
                     <div
                         key={message.id} // Add a unique key prop for each item
-                        className="my-5 mr-8 p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+                        className="my-5 p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
                     >
                         <a href="#">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
